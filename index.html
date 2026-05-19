@@ -1379,7 +1379,11 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
   .sticky-cta-form .btn{white-space:nowrap;padding:10px 14px;font-size:12px;}
   .sticky-cta-msg{font-size:12px;text-align:center;}
   .phone-3d{width:240px;height:480px;}
-  .lang-switch{display:none;}
+  /* Mobile nav: hide "Join Waitlist" button, show language switcher instead.
+     The CTA is duplicated in the sticky bar at the bottom and the waitlist section. */
+  .lang-switch{display:flex !important;gap:4px;padding:4px;}
+  .lang-btn{padding:6px 8px;font-size:10px;min-width:30px;}
+  nav .btn-primary,nav .btn{display:none !important;}
   .press-track{gap:20px 28px;}
   .press-logo{font-size:18px;}
   .press-logo.sans{font-size:15px;}
