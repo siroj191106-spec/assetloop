@@ -1367,15 +1367,21 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
   nav.scrolled{padding:10px 20px;}
   .nav-links{display:none;}
   .container{padding:0 20px;}
-  section{padding:80px 0;}
+  section{padding:64px 0;}
   .cards-3,.steps-4,.revenue-grid,.gap-comparison,.team-grid,.quiz-options{grid-template-columns:1fr;}
   .qa-wrapper{grid-template-columns:1fr;}
   .qa-sidebar{position:relative;top:auto;max-height:none;}
-  .sticky-cta{flex-direction:column;gap:10px;padding:12px;}
-  .sticky-cta-form input{width:100%;}
+  .sticky-cta{flex-direction:column;gap:8px;padding:10px 14px;}
+  .sticky-cta-form{width:100%;}
+  .sticky-cta-form input{width:100%;min-width:0;}
+  .sticky-cta-form .btn{white-space:nowrap;padding:10px 14px;font-size:12px;}
+  .sticky-cta-msg{font-size:12px;text-align:center;}
   .phone-3d{width:240px;height:480px;}
   .lang-switch{display:none;}
-  .press-track{gap:32px;}
+  .press-track{gap:20px 28px;}
+  .press-logo{font-size:18px;}
+  .press-logo.sans{font-size:15px;}
+  .press-logo.mono{font-size:14px;letter-spacing:1.5px;}
   .gap-timeline{grid-template-columns:1fr;gap:24px;}
   .gap-line{display:none;}
   .hero-stats{grid-template-columns:1fr;gap:16px;}
@@ -1385,6 +1391,32 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
   .footer-grid{grid-template-columns:1fr;}
   .cta-panel{padding:32px 24px;}
   .floating-card{display:none;}
+
+  /* ===== MOBILE-SPECIFIC LAYOUT FIXES ===== */
+  /* Insight / Market cards: stack 1-per-row, never overlap */
+  .market-grid{grid-template-columns:1fr !important;gap:16px;margin-bottom:48px;}
+  .market-card{padding:28px 24px;}
+  .market-card[style*="grid-column"]{grid-column:auto !important;}
+  .market-num{font-size:clamp(48px,14vw,72px) !important;margin-bottom:12px;}
+  .market-card h4{font-size:16px;line-height:1.35;}
+  .market-card p{font-size:13px;}
+
+  /* Data Flywheel: shrink and prevent overlap with section title */
+  .advantage-grid{gap:32px;}
+  .flywheel{max-width:300px;}
+  .flywheel-center{width:120px;height:120px;font-size:11px;letter-spacing:1px;}
+  .flywheel-node{font-size:10px;padding:8px 12px;letter-spacing:0.5px;}
+  h2{font-size:clamp(28px,7vw,40px);line-height:1.15;}
+
+  /* Exit popup: ensure it fits mobile and doesn't clip CTA text */
+  .exit-popup{padding:16px;}
+  .exit-inner{padding:32px 20px;}
+  .exit-form{flex-direction:column;gap:8px;}
+  .exit-form input,.exit-form .btn{width:100%;min-width:0;}
+
+  /* Roadmap (CTA) tabs / Demo tabs — prevent overflow on mobile */
+  .cta-tabs,.demo-tabs{flex-wrap:wrap;gap:6px;}
+  .cta-tab,.demo-tab{font-size:11px;padding:8px 12px;}
 }
 </style>
 </head>
@@ -2172,9 +2204,9 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
       </div>
       <div class="cta-panel" data-panel="users">
         <h3 data-i18n="roadmap.p3.title">Be first when AssetLoop launches</h3>
-        <p class="sub" data-i18n="roadmap.p3.sub">Join the early-access waitlist. Get free Premium for the first year and help shape what we build.</p>
+        <p class="sub" data-i18n="roadmap.p3.sub">Join the early-access waitlist. Get free Premium for the first 6 months and help shape what we build.</p>
         <ul class="cta-list">
-          <li data-i18n="roadmap.p3.l1">Free Premium for the first 12 months</li>
+          <li data-i18n="roadmap.p3.l1">Free Premium for the first 6 months</li>
           <li data-i18n="roadmap.p3.l2">Direct line to the team for feedback</li>
           <li data-i18n="roadmap.p3.l3">Beta access before public launch</li>
           <li data-i18n="roadmap.p3.l4">Earn referral credits — invite friends, unlock features</li>
@@ -2401,12 +2433,12 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <span class="exit-eyebrow" data-i18n="exit.eyebrow">Wait — before you go</span>
-    <h3 data-i18n="exit.title">Free Premium <em>for 1 year.</em></h3>
-    <p data-i18n="exit.sub">Join the waitlist today and we'll give you 12 months of Premium when AssetLoop launches in 2026. No catch.</p>
-    <span class="exit-perk" data-i18n="exit.perk">$96 value · Limited spots</span>
+    <h3 data-i18n="exit.title">Free Premium <em>for 6 months.</em></h3>
+    <p data-i18n="exit.sub">Join the waitlist today and we'll give you 6 months of Premium when AssetLoop launches in 2026. No catch.</p>
+    <span class="exit-perk" data-i18n="exit.perk">$48 value · Limited spots</span>
     <form class="exit-form" onsubmit="handleExit(event)">
       <input type="email" placeholder="your@email.com" required id="exitEmail">
-      <button type="submit" class="btn btn-primary" data-i18n="exit.cta">Claim my year →</button>
+      <button type="submit" class="btn btn-primary" data-i18n="exit.cta">Claim 6 months free →</button>
     </form>
   </div>
 </div>
@@ -2538,8 +2570,8 @@ const I18N={
     'roadmap.p2.title':'Milestones','roadmap.p2.sub':'From closed beta to scale — every quarter has a clear target.',
     'roadmap.p2.l1':'<strong>Q4 2026 · Closed Beta</strong> — 500 users, AI accuracy &gt;90%','roadmap.p2.l2':'<strong>Q2 2027 · Public Launch</strong> — iOS + Android, U.S. market','roadmap.p2.l3':'<strong>Q4 2027 · 50K Users</strong> — First subscription revenue','roadmap.p2.l4':'<strong>Q2 2028 · Scale Phase</strong> — B2B data layer, expansion',
     'roadmap.p2.cta':'Join the waitlist →',
-    'roadmap.p3.title':'Be first when AssetLoop launches','roadmap.p3.sub':'Join the early-access waitlist. Get free Premium for the first year and help shape what we build.',
-    'roadmap.p3.l1':'Free Premium for the first 12 months','roadmap.p3.l2':'Direct line to the team for feedback','roadmap.p3.l3':'Beta access before public launch','roadmap.p3.l4':'Earn referral credits — invite friends, unlock features',
+    'roadmap.p3.title':'Be first when AssetLoop launches','roadmap.p3.sub':'Join the early-access waitlist. Get free Premium for the first 6 months and help shape what we build.',
+    'roadmap.p3.l1':'Free Premium for the first 6 months','roadmap.p3.l2':'Direct line to the team for feedback','roadmap.p3.l3':'Beta access before public launch','roadmap.p3.l4':'Earn referral credits — invite friends, unlock features',
     'roadmap.p3.cta':'Join waitlist below ↓',
     'waitlist.title':'Be first when we launch.','waitlist.sub':'Join the waitlist for early access to the Beta in 2026. We\'ll never spam — promise.',
     'waitlist.cta':'Reserve my spot →','waitlist.counter':'already on the list',
@@ -2567,7 +2599,7 @@ const I18N={
     'footer.c4.h':'Connect','footer.c4.l2':'Twitter / X','footer.c4.l3':'LinkedIn','footer.c4.l4':'AngelList',
     'footer.copy':'© 2026 AssetLoop · All rights reserved','footer.tag':'Built with ★ for the next 100M owners',
     'sticky.msg':'<b>2,847+</b> already on the waitlist. Don\'t miss the Beta.','sticky.cta':'Reserve spot →',
-    'exit.eyebrow':'Wait — before you go','exit.title':'Free Premium <em>for 1 year.</em>','exit.sub':'Join the waitlist today and we\'ll give you 12 months of Premium when AssetLoop launches in 2026. No catch.','exit.perk':'$96 value · Limited spots','exit.cta':'Claim my year →',
+    'exit.eyebrow':'Wait — before you go','exit.title':'Free Premium <em>for 6 months.</em>','exit.sub':'Join the waitlist today and we\'ll give you 6 months of Premium when AssetLoop launches in 2026. No catch.','exit.perk':'$48 value · Limited spots','exit.cta':'Claim 6 months free →',
     'modal.title':'The 90-second pitch','modal.sub':'The shortest path from "what is this?" to "I want in." A walkthrough of the AssetLoop product, market, and moat.','modal.placeholder':'DEMO VIDEO COMING SOON','modal.cta':'Request live demo →',
     'marquee.1':'Catalog Every Item','marquee.2':'Track Live Value','marquee.3':'Sell at the Peak','marquee.4':'Upgrade Smarter','marquee.5':'Built for Owners'
   },
@@ -2680,7 +2712,7 @@ const I18N={
     'roadmap.p2.title':'Bosqichlar','roadmap.p2.sub':'Yopiq betadan ishga tushishgacha — har chorakda aniq maqsad.',
     'roadmap.p2.l1':'<strong>Q4 2026 · Yopiq Beta</strong> — 500 foydalanuvchi, AI aniqlik &gt;90%','roadmap.p2.l2':'<strong>Q2 2027 · Ommaviy Ishga Tushirish</strong> — iOS + Android, AQSh bozori','roadmap.p2.l3':'<strong>Q4 2027 · 50K Foydalanuvchi</strong> — Birinchi obuna daromadi','roadmap.p2.l4':'<strong>Q2 2028 · Ko\'lam Bosqichi</strong> — B2B ma\'lumot qatlami, kengaytirish',
     'roadmap.p2.cta':'Navbatga yozilish →',
-    'roadmap.p3.title':'AssetLoop ishga tushganda birinchi bo\'ling','roadmap.p3.sub':'Erta kirish navbatiga yoziling. Birinchi yil bepul Premium oling.','roadmap.p3.l1':'Birinchi 12 oy bepul Premium','roadmap.p3.l2':'Jamoa bilan to\'g\'ridan-to\'g\'ri aloqa','roadmap.p3.l3':'Ommaviy ishga tushirishdan oldin Beta kirish','roadmap.p3.l4':'Referal kredit toping — do\'st taklif qiling',
+    'roadmap.p3.title':'AssetLoop ishga tushganda birinchi bo\'ling','roadmap.p3.sub':'Erta kirish navbatiga yoziling. Birinchi 6 oy bepul Premium oling.','roadmap.p3.l1':'Birinchi 6 oy bepul Premium','roadmap.p3.l2':'Jamoa bilan to\'g\'ridan-to\'g\'ri aloqa','roadmap.p3.l3':'Ommaviy ishga tushirishdan oldin Beta kirish','roadmap.p3.l4':'Referal kredit toping — do\'st taklif qiling',
     'roadmap.p3.cta':'Pastdagi navbatga yozilish ↓',
     'waitlist.title':'Ishga tushganimizda birinchi bo\'ling.','waitlist.sub':'2026-da Beta\'ga erta kirish uchun navbatga yoziling. Hech qachon spam yubormaymiz.',
     'waitlist.cta':'Joyimni band qilish →','waitlist.counter':'kishi navbatda',
@@ -2708,7 +2740,7 @@ const I18N={
     'footer.c4.h':'Ulanish','footer.c4.l2':'Twitter / X','footer.c4.l3':'LinkedIn','footer.c4.l4':'AngelList',
     'footer.copy':'© 2026 AssetLoop · Barcha huquqlar himoyalangan','footer.tag':'Keyingi 100M egalar uchun ★ bilan qurilgan',
     'sticky.msg':'<b>2,847+</b> kishi navbatda. Beta\'ni boy bermang.','sticky.cta':'Joy band qilish →',
-    'exit.eyebrow':'Kutib turing — ketishdan oldin','exit.title':'1 yil bepul <em>Premium.</em>','exit.sub':'Bugun navbatga yozilsangiz, 2026-da AssetLoop ishga tushganda 12 oylik Premium beramiz.','exit.perk':'$96 qiymat · Cheklangan joylar','exit.cta':'Yilni olish →',
+    'exit.eyebrow':'Kutib turing — ketishdan oldin','exit.title':'6 oy bepul <em>Premium.</em>','exit.sub':'Bugun navbatga yozilsangiz, 2026-da AssetLoop ishga tushganda 6 oylik Premium beramiz.','exit.perk':'$48 qiymat · Cheklangan joylar','exit.cta':'6 oyni olish →',
     'modal.title':'90-soniyalik pitch','modal.sub':'"Bu nima?"dan "Ichkariga kirmoqchiman"gacha eng qisqa yo\'l. AssetLoop mahsulot, bozor va mo\'at bo\'ylab sayohat.','modal.placeholder':'DEMO VIDEO TEZ ORADA','modal.cta':'Jonli demo so\'rash →',
     'marquee.1':'Har Narsani Katalogla','marquee.2':'Jonli Qiymatni Kuzat','marquee.3':'Peak\'da Sot','marquee.4':'Aqlliroq Yangila','marquee.5':'Egalar Uchun Qurilgan'
   },
@@ -2821,7 +2853,7 @@ const I18N={
     'roadmap.p2.title':'Этапы','roadmap.p2.sub':'От закрытой беты к масштабу — каждый квартал цель.',
     'roadmap.p2.l1':'<strong>Q4 2026 · Закрытая Бета</strong> — 500 юзеров, точность AI &gt;90%','roadmap.p2.l2':'<strong>Q2 2027 · Публичный запуск</strong> — iOS + Android, США','roadmap.p2.l3':'<strong>Q4 2027 · 50K юзеров</strong> — Первая выручка по подписке','roadmap.p2.l4':'<strong>Q2 2028 · Масштаб</strong> — B2B уровень данных, экспансия',
     'roadmap.p2.cta':'В список ожидания →',
-    'roadmap.p3.title':'Будьте первыми','roadmap.p3.sub':'Подпишитесь на ранний доступ. Получите год Premium бесплатно.','roadmap.p3.l1':'Бесплатный Premium на 12 месяцев','roadmap.p3.l2':'Прямая связь с командой','roadmap.p3.l3':'Бета до публичного запуска','roadmap.p3.l4':'Реферальные кредиты — приглашайте друзей',
+    'roadmap.p3.title':'Будьте первыми','roadmap.p3.sub':'Подпишитесь на ранний доступ. Получите 6 месяцев Premium бесплатно.','roadmap.p3.l1':'Бесплатный Premium на 6 месяцев','roadmap.p3.l2':'Прямая связь с командой','roadmap.p3.l3':'Бета до публичного запуска','roadmap.p3.l4':'Реферальные кредиты — приглашайте друзей',
     'roadmap.p3.cta':'В список внизу ↓',
     'waitlist.title':'Будьте первыми при запуске.','waitlist.sub':'Подпишитесь на ранний доступ к Бете в 2026. Никакого спама.',
     'waitlist.cta':'Забронировать место →','waitlist.counter':'уже в списке',
@@ -2849,7 +2881,7 @@ const I18N={
     'footer.c4.h':'Связь','footer.c4.l2':'Twitter / X','footer.c4.l3':'LinkedIn','footer.c4.l4':'AngelList',
     'footer.copy':'© 2026 AssetLoop · Все права защищены','footer.tag':'Создано с ★ для следующих 100M владельцев',
     'sticky.msg':'<b>2,847+</b> уже в списке. Не пропустите Бету.','sticky.cta':'Забронировать →',
-    'exit.eyebrow':'Подождите — перед уходом','exit.title':'Бесплатный Premium <em>на 1 год.</em>','exit.sub':'Подпишитесь сегодня и получите 12 месяцев Premium при запуске в 2026.','exit.perk':'$96 ценность · Лимит','exit.cta':'Забрать год →',
+    'exit.eyebrow':'Подождите — перед уходом','exit.title':'Бесплатный Premium <em>на 6 месяцев.</em>','exit.sub':'Подпишитесь сегодня и получите 6 месяцев Premium при запуске в 2026.','exit.perk':'$48 ценность · Лимит','exit.cta':'Забрать 6 месяцев →',
     'modal.title':'90-секундный питч','modal.sub':'Кратчайший путь от "что это?" до "хочу внутрь."','modal.placeholder':'ДЕМО-ВИДЕО СКОРО','modal.cta':'Запросить демо →',
     'marquee.1':'Каталог Каждой Вещи','marquee.2':'Живая Цена','marquee.3':'Продай на Пике','marquee.4':'Умный Апгрейд','marquee.5':'Для Владельцев'
   },
@@ -2962,7 +2994,7 @@ const I18N={
     'roadmap.p2.title':'마일스톤','roadmap.p2.sub':'클로즈드 베타에서 스케일까지 — 매 분기마다 명확한 목표.',
     'roadmap.p2.l1':'<strong>Q4 2026 · 클로즈드 베타</strong> — 사용자 500명, AI 정확도 >90%','roadmap.p2.l2':'<strong>Q2 2027 · 퍼블릭 런칭</strong> — iOS + Android, 미국','roadmap.p2.l3':'<strong>Q4 2027 · 사용자 50K</strong> — 첫 구독 매출','roadmap.p2.l4':'<strong>Q2 2028 · 스케일</strong> — B2B 데이터 레이어, 확장',
     'roadmap.p2.cta':'대기자 명단 가입 →',
-    'roadmap.p3.title':'런칭 시 가장 먼저','roadmap.p3.sub':'얼리 액세스에 가입하면 1년 무료 Premium.','roadmap.p3.l1':'첫 12개월 무료 Premium','roadmap.p3.l2':'팀과 직접 소통','roadmap.p3.l3':'퍼블릭 런칭 전 베타 액세스','roadmap.p3.l4':'추천 크레딧 — 친구 초대',
+    'roadmap.p3.title':'런칭 시 가장 먼저','roadmap.p3.sub':'얼리 액세스에 가입하면 6개월 무료 Premium.','roadmap.p3.l1':'첫 6개월 무료 Premium','roadmap.p3.l2':'팀과 직접 소통','roadmap.p3.l3':'퍼블릭 런칭 전 베타 액세스','roadmap.p3.l4':'추천 크레딧 — 친구 초대',
     'roadmap.p3.cta':'아래 대기자 명단 ↓',
     'waitlist.title':'런칭 시 가장 먼저.','waitlist.sub':'2026 베타 얼리 액세스에 가입. 스팸 없음.',
     'waitlist.cta':'자리 예약 →','waitlist.counter':'명이 이미 명단에',
@@ -2990,7 +3022,7 @@ const I18N={
     'footer.c4.h':'연결','footer.c4.l2':'Twitter / X','footer.c4.l3':'LinkedIn','footer.c4.l4':'AngelList',
     'footer.copy':'© 2026 AssetLoop · 모든 권리 보유','footer.tag':'다음 1억 명의 소유자를 위해 ★ 로 만들어짐',
     'sticky.msg':'<b>2,847+</b>명이 이미 대기 중. 베타를 놓치지 마세요.','sticky.cta':'자리 예약 →',
-    'exit.eyebrow':'잠깐 — 떠나기 전에','exit.title':'1년 무료 <em>Premium.</em>','exit.sub':'오늘 대기자에 가입하면 2026년 출시 시 12개월 Premium을 드립니다.','exit.perk':'$96 가치 · 한정','exit.cta':'1년 받기 →',
+    'exit.eyebrow':'잠깐 — 떠나기 전에','exit.title':'6개월 무료 <em>Premium.</em>','exit.sub':'오늘 대기자에 가입하면 2026년 출시 시 6개월 Premium을 드립니다.','exit.perk':'$48 가치 · 한정','exit.cta':'6개월 받기 →',
     'modal.title':'90초 피치','modal.sub':'"이게 뭐야?"에서 "참여하고 싶다"까지 가장 짧은 길.','modal.placeholder':'데모 비디오 곧 공개','modal.cta':'라이브 데모 요청 →',
     'marquee.1':'모든 물건 카탈로그','marquee.2':'실시간 가치 추적','marquee.3':'피크에서 판매','marquee.4':'스마트한 업그레이드','marquee.5':'소유자를 위해 제작'
   },
@@ -3103,7 +3135,7 @@ const I18N={
     'roadmap.p2.title':'里程碑','roadmap.p2.sub':'从闭测到规模 — 每个季度有明确目标。',
     'roadmap.p2.l1':'<strong>2026 Q4 · 闭测</strong> — 500用户，AI准确率>90%','roadmap.p2.l2':'<strong>2027 Q2 · 公开发布</strong> — iOS+Android，美国市场','roadmap.p2.l3':'<strong>2027 Q4 · 5万用户</strong> — 首次订阅收入','roadmap.p2.l4':'<strong>2028 Q2 · 规模化</strong> — B2B数据层，扩张',
     'roadmap.p2.cta':'加入等候名单 →',
-    'roadmap.p3.title':'AssetLoop发布时第一时间体验','roadmap.p3.sub':'加入早期访问。获得一年免费Premium。','roadmap.p3.l1':'前12个月免费Premium','roadmap.p3.l2':'与团队直接沟通','roadmap.p3.l3':'公开发布前测试访问','roadmap.p3.l4':'推荐积分 — 邀请朋友',
+    'roadmap.p3.title':'AssetLoop发布时第一时间体验','roadmap.p3.sub':'加入早期访问。获得6个月免费Premium。','roadmap.p3.l1':'前6个月免费Premium','roadmap.p3.l2':'与团队直接沟通','roadmap.p3.l3':'公开发布前测试访问','roadmap.p3.l4':'推荐积分 — 邀请朋友',
     'roadmap.p3.cta':'下方加入等候名单 ↓',
     'waitlist.title':'发布时第一时间体验。','waitlist.sub':'加入2026年Beta的等候名单。我们绝不发垃圾邮件。',
     'waitlist.cta':'预定我的位置 →','waitlist.counter':'已在名单上',
@@ -3131,7 +3163,7 @@ const I18N={
     'footer.c4.h':'连接','footer.c4.l2':'Twitter / X','footer.c4.l3':'LinkedIn','footer.c4.l4':'AngelList',
     'footer.copy':'© 2026 AssetLoop · 保留所有权利','footer.tag':'为下一个1亿所有者用 ★ 打造',
     'sticky.msg':'<b>2,847+</b>已在等候名单中。不要错过Beta。','sticky.cta':'预定位置 →',
-    'exit.eyebrow':'等等 — 离开之前','exit.title':'1年免费 <em>Premium。</em>','exit.sub':'今天加入等候名单，当AssetLoop在2026年发布时获得12个月Premium。','exit.perk':'$96价值 · 名额有限','exit.cta':'认领我的一年 →',
+    'exit.eyebrow':'等等 — 离开之前','exit.title':'6个月免费 <em>Premium。</em>','exit.sub':'今天加入等候名单，当AssetLoop在2026年发布时获得6个月Premium。','exit.perk':'$48价值 · 名额有限','exit.cta':'认领我的6个月 →',
     'modal.title':'90秒推介','modal.sub':'从"这是什么？"到"我要加入"的最短路径。','modal.placeholder':'演示视频即将推出','modal.cta':'请求实时演示 →',
     'marquee.1':'目录每件物品','marquee.2':'追踪实时价值','marquee.3':'在峰值出售','marquee.4':'更聪明升级','marquee.5':'为所有者打造'
   }
@@ -3685,7 +3717,7 @@ const QA_DATA={
     ['What\'s the transaction fee?','2.5% on platform-facilitated sales. eBay charges 13%. We\'re 5x cheaper and we add timing intelligence on top.'],
     ['Why 2.5% and not more?','We optimize for volume, not margin per sale. Lower friction = more sales = more data = better model = more users. Flywheel.'],
     ['How does this compare to eBay\'s 13%?','We save users 10.5 percentage points. On a $500 sale that\'s $52 in pocket. Subscription pays for itself in one sale.'],
-    ['When does Premium launch?','Q2 2027, alongside the public iOS+Android launch. Closed-beta users get 12 months Premium free.'],
+    ['When does Premium launch?','Q2 2027, alongside the public iOS+Android launch. Closed-beta users get 6 months Premium free.'],
     ['When does B2B Data SaaS launch?','Q2 2028, after reaching 500K active users. That\'s the minimum dataset size for meaningful enterprise insights.'],
     ['Who pays for B2B data?','Insurance companies (real-time household valuations), OEM manufacturers (post-purchase demand signals), banks (collateral data).'],
     ['What\'s the unit economics?','CAC: $12 (organic-heavy). LTV: $180 (5-year average). LTV/CAC = 15x. Payback period: 2.5 months.'],
@@ -4009,7 +4041,7 @@ business:[
 ["Tranzaksiya to'lovi qancha?","Platforma orqali sotuvlarda 2.5%. eBay 13% oladi. Biz 5× arzon, plus timing intelligence beramiz."],
 ["Nega 2.5% va undan ortiq emas?","Hajm uchun optimize qilamiz, sotuv marjasi uchun emas. Past friksiya = ko'p sotuv = ko'p data = flywheel."],
 ["eBay 13% bilan solishtirilganda qanday?","Foydalanuvchilar 10.5 foiz tejaydi. $500 sotuvda $94 cho'ntakda. Obuna bitta sotuvda o'zini qoplaydi."],
-["Premium qachon ishga tushadi?","Q2 2027, public iOS+Android launch bilan birga. Beta foydalanuvchilarga 12 oy bepul Premium."],
+["Premium qachon ishga tushadi?","Q2 2027, public iOS+Android launch bilan birga. Beta foydalanuvchilarga 6 oy bepul Premium."],
 ["B2B Data SaaS qachon?","Q2 2028, 500K aktiv foydalanuvchidan keyin. Enterprise insights uchun minimal dataset hajmi."],
 ["B2B data uchun kim to'laydi?","Sug'urta kompaniyalari (real vaqtli uy baholari), OEM ishlab chiqaruvchilari, banklar."],
 ["Unit ekonomikasi qanday?","CAC: $12. LTV: $180 (5 yillik avg). LTV/CAC = 15×. Payback: 2.5 oy."],
@@ -4331,7 +4363,7 @@ business:[
 ["Какая комиссия?","2.5% с платформенных продаж. eBay — 13%. Мы в 5 раз дешевле плюс timing intelligence."],
 ["Почему 2.5%, не больше?","Оптимизируем объём, не маржу. Меньше трения = больше продаж = больше данных = маховик."],
 ["Как сравнивается с 13% eBay?","Пользователи экономят 10.5 п.п. На $500 продаже — $52 в кармане. Подписка окупается с одной продажи."],
-["Когда стартует Premium?","Q2 2027 вместе с iOS+Android запуском. Beta-пользователи получают 12 месяцев Premium бесплатно."],
+["Когда стартует Premium?","Q2 2027 вместе с iOS+Android запуском. Beta-пользователи получают 6 месяцев Premium бесплатно."],
 ["Когда B2B Data SaaS?","Q2 2028 после 500K активных пользователей. Минимальный датасет для enterprise."],
 ["Кто платит за B2B данные?","Страховые (real-time оценки), OEM (сигналы пост-продаж), банки (collateral данные)."],
 ["Unit-экономика?","CAC: $12. LTV: $180 (5-летнее ср.). LTV/CAC = 15×. Окупаемость: 2.5 месяца."],
@@ -4653,7 +4685,7 @@ business:[
 ["거래 수수료?","플랫폼 판매 2.5%. eBay 13%. 우리는 5배 저렴, 타이밍 인텔리전스 추가."],
 ["왜 2.5%이고 더 안 받나?","마진이 아닌 볼륨 최적화. 낮은 마찰 = 많은 판매 = 많은 데이터 = 플라이휠."],
 ["eBay 13%와 비교?","사용자는 10.5%p 절약. $500 판매에 $52. 구독은 한 번 판매로 회수."],
-["Premium 언제 출시?","Q2 2027, iOS+Android 공개 출시와 함께. 베타 사용자는 12개월 무료."],
+["Premium 언제 출시?","Q2 2027, iOS+Android 공개 출시와 함께. 베타 사용자는 6개월 무료."],
 ["B2B Data SaaS 언제?","Q2 2028, 50만 활성 사용자 후. 엔터프라이즈 인사이트 최소 데이터셋."],
 ["B2B 데이터 누가 지불?","보험사 (실시간 가구 평가), OEM 제조업체, 은행 (담보 데이터)."],
 ["유닛 이코노믹스?","CAC: $12. LTV: $180 (5년 평균). LTV/CAC = 15×. 회수 기간: 2.5개월."],
@@ -4975,7 +5007,7 @@ business:[
 ["交易费多少?","平台促成销售2.5%。eBay 13%。我们便宜5倍,加上时机情报。"],
 ["为什么是2.5%而不是更多?","我们优化数量,而不是每次销售利润率。低摩擦=更多销售=更多数据=飞轮。"],
 ["与eBay 13%相比?","用户节省10.5个百分点。$500销售$52入袋。一次销售订阅自付。"],
-["Premium何时推出?","Q2 2027,与iOS+Android公开发布同时。Beta用户12个月免费Premium。"],
+["Premium何时推出?","Q2 2027,与iOS+Android公开发布同时。Beta用户6个月免费Premium。"],
 ["B2B Data SaaS何时?","Q2 2028,达到50万活跃用户后。"],
 ["谁为B2B数据付费?","保险公司、OEM制造商、银行。"],
 ["单位经济学?","CAC:$12。LTV:$180(5年平均)。LTV/CAC = 15×。回报期:2.5个月。"],
