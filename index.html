@@ -1210,6 +1210,8 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
    ============================================================ */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
+/* Hero is above-the-fold — never hide it behind scroll reveal */
+.hero .reveal{opacity:1 !important;transform:none !important;}
 
 /* LANGUAGE SWITCHER */
 .lang-switch{display:flex;gap:2px;padding:4px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:100px;margin-right:16px;}
@@ -1473,7 +1475,7 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
-      <div class="reveal">
+      <div class="reveal visible">
         <div class="hero-eyebrow">
           <span class="pulse"></span>
           <span data-i18n="hero.eyebrow">Team Presentation · Spring 2026</span>
@@ -1531,7 +1533,7 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
         </div>
       </div>
 
-      <div class="hero-visual reveal">
+      <div class="hero-visual reveal visible">
         <div class="phone-3d" id="phone3d">
           <div class="phone-glow"></div>
           <div class="phone-frame">
@@ -3403,6 +3405,13 @@ const observer=new IntersectionObserver(entries=>{
   });
 },{threshold:0.12,rootMargin:'0px 0px -50px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+/* Safety net: any reveal still hidden after 2.5s gets force-shown — prevents above-the-fold blank screens on mobile */
+setTimeout(()=>{
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight*1.2)el.classList.add('visible');
+  });
+},2500);
 
 /* =========== COUNTERS =========== */
 function animateCounter(el){
