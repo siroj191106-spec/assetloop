@@ -1426,9 +1426,13 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
   .container{width:100% !important;max-width:100% !important;box-sizing:border-box;}
   section{max-width:100%;overflow-x:hidden;width:100%;}
   /* Every block child of grid items inside container must respect parent width
-     and shrink properly (min-width:0 is critical for flex/grid descendants) */
-  .container *{min-width:0;max-width:100%;box-sizing:border-box;}
+     and shrink properly (min-width:0 is critical for flex/grid descendants).
+     EXCEPTION: ticker-content has intentional horizontal nowrap layout for the
+     marquee animation — leave it alone. */
+  .container *:not(.ticker-content):not(.ticker-item){min-width:0;max-width:100%;box-sizing:border-box;}
   .hero-grid > *{min-width:0;max-width:100%;}
+  /* Ticker is purely decorative on mobile — hide to keep hero clean */
+  .live-ticker{display:none !important;}
   /* No reveal animations on mobile — show everything immediately. The animations
      were leaving sections invisible when JS hadn't fired yet or scroll was too fast. */
   .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
