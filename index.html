@@ -1429,18 +1429,22 @@ footer{padding:80px 0 48px;border-top:1px solid var(--border);position:relative;
 
   /* Hero: tighter typography, hide 3D phone visual (decorative), simpler ticker */
   .hero{min-height:auto;padding:110px 0 48px;}
-  .hero h1{font-size:clamp(34px,8.5vw,52px) !important;line-height:1.1;}
-  .hero-sub{font-size:15px;line-height:1.5;max-width:100%;}
-  .hero-tag{font-size:11px;line-height:1.4;letter-spacing:0.3px;word-wrap:break-word;}
-  .hero-eyebrow{font-size:10px;letter-spacing:1.2px;padding:8px 14px;margin-bottom:20px;}
+  .hero h1{font-size:clamp(30px,8vw,48px) !important;line-height:1.1;max-width:100%;overflow-wrap:anywhere;}
+  .hero-sub{font-size:14px;line-height:1.5;max-width:100%;overflow-wrap:anywhere;}
+  .hero-tag{font-size:10px;line-height:1.4;letter-spacing:0.3px;overflow-wrap:anywhere;word-break:break-word;max-width:100%;}
+  .hero-eyebrow{font-size:10px;letter-spacing:1.2px;padding:8px 14px;margin-bottom:20px;max-width:100%;}
   .hero-eyebrow span:not(.pulse){white-space:normal;}
-  .hero-grid{grid-template-columns:1fr !important;gap:32px;}
+  .hero-grid{grid-template-columns:1fr !important;gap:32px;width:100%;}
   .hero-visual{display:none !important;}
   .hero-actions{gap:12px;}
   .btn-large{font-size:13px;padding:14px 22px;}
-  .live-ticker{max-width:100%;overflow:hidden;}
-  .ticker-track{max-width:100%;overflow:hidden;}
+  /* Ticker must shrink — flex items default to min-width:auto which ignores overflow:hidden */
+  .live-ticker{max-width:100%;width:100%;min-width:0;overflow:hidden;padding:12px 16px;margin-top:32px;}
+  .ticker-track{flex:1 1 0;min-width:0;max-width:100%;overflow:hidden;}
   .ticker-item{font-size:11px;}
+
+  /* Force every block-level child of .container to respect the viewport width */
+  .container > *{max-width:100%;}
 
   /* Flywheel: tighter, more vertical separation from table below */
   .flywheel{max-width:280px;margin-bottom:24px;}
